@@ -1,0 +1,73 @@
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+/*
+NAVIGATION STYLING
+**********************************************************************/
+/*Container-fluid overrides*/
+.container-fluid {
+  padding-bottom:0;
+}
+
+
+
+/*Styles for the wrapper*/
+.nav-wrapper {
+  background-color: #1e46e5;
+  /*padding: 5px 0;*/
+  font-size: .95rem;
+  letter-spacing: 1.2px;
+}
+
+/*Styles for navbar brand*/
+.navbar-brand {
+  color: #fff3cd;
+  font-size: 1.2rem;
+}
+
+
+.navbar-light .navbar-nav .nav-link {
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/*Adds space on the right of each of the nav links*/
+/*.navbar-light .navbar-nav .nav-link:not(:last-child) {
+  margin-right: 10px;
+}*/
+
+/*Drop Down Menu*/
+.dropdown-menu {
+  border-top: 2px solid #001B84;
+  border-radius: 0;
+}
+
+/*Btn Signin*/
+.btn-signin,
+.btn-signin:link,
+.btn-signin:active,
+.btn-signin:focus,
+
+{
+  color: #FFFFFF;
+  text-decoration: underline;
+
+}

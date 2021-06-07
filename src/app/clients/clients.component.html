@@ -1,0 +1,136 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!clients"><em>Loading...</em></p>
+        <div *ngIf="clients">
+          <div class="row">
+            <div class="col-9">
+              <h5 class="card-title">Clients</h5>
+            </div>
+            <div class="col-3">
+              <button type="button" class="btn btn-info btn-block ai-btn btn-rounded btn-block" data-toggle="modal" data-target="#add-client" (click)="AddClient()">Add Client</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="clients.length == 0">No clients added yet</div>
+          <div class="m-t-40" *ngIf="clients.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Contact</th>
+                  <th>Location</th>
+                  <th>Users</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let client of clients">
+                  <td><a [routerLink]='["/client"]' [queryParams]="{Id: client.OID }">{{ client.Name }}</a></td>
+                  <td>{{ client.Email }}</td>
+                  <td>{{ client.Contact }}</td>
+                  <td>{{ client.Location }}</td>
+                  <td>{{ client.Users.length }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete" id="{{client.OID}}" (click)="InitClient($event)" data-toggle="modal" data-target="#add-client"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete" id="{{client.OID}}" (click)="InitClient($event)" data-toggle="modal" data-target="#delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!--Client modal-->
+<div id="add-client" *ngIf="client" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #clientData="ngForm" (ngSubmit)="onClickSubmit(clientData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Client</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_client>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Name" name="Name" class="form-control" placeholder="Name" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Email" name="Email" class="form-control" placeholder="Email" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Contact" name="Contact" class="form-control" placeholder="Phone" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Location" name="Location" class="form-control" placeholder="Address" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <label>Administrator Email</label>
+              <input type="email" [(ngModel)]="user.Email" name="AdminEmail" class="form-control" placeholder="Admin Email" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <label>Plan</label>
+              <select [(ngModel)]="client.Package.OID" name="Package" class="custom-select col-12" id="inlineFormCustomSelect" ngModel>
+                <option *ngIf="client.Package.OID == undefined" [value]="client.Package.OID" selected>Choose...</option>
+                <option *ngFor="let package of packages" [value]="package.OID" [selected]="client.Package.OID==package.OID">{{ package.Name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#i_pleasewait" #i_pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="i_pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Delete Modal-->
+<div id="delete" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_delete>×</button>
+      </div>
+      <div class="modal-body">
+        <label>Are you sure you would like to delete this client?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info ai-btn waves-effect" (click)="OnConfirmDelete()">Yes</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

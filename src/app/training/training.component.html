@@ -1,0 +1,262 @@
+<h1>Training</h1>
+
+<div class="row" *ngIf="training">
+  <div class="col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-8">
+          <div><label style="font-style: italic;">Title</label> : {{training.Name}}</div>
+          <div><label style="font-style: italic;">Location</label> : {{training.Location}}</div>
+        </div>
+        <div class="col-lg-4" style="text-align: right;">
+          <a href="#" class="btn btn-info">Change</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="row" *ngIf="training">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!training.Topics"><em>Loading...</em></p>
+        <div *ngIf="training.Topics">
+          <div class="row">
+            <div class="col-lg-6">
+              <h5 class="card-title">Topics</h5>
+              <div id="add-user" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #topic="ngForm" (ngSubmit)="OnTopicSubmitted(topic.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Topic</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_topic>×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input type="text" name="Name" class="form-control" placeholder="Title" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: right;">
+              <button type="button" class="btn btn-info ai-btn btn-rounded" data-toggle="modal" data-target="#add-user">Add Topic</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="training.Topics.length == 0">No Topics added yet</div>
+          <div class="m-t-30" *ngIf="training.Topics.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let topic of training.Topics">
+                  <td>{{ topic.Name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!training.Trainers"><em>Loading...</em></p>
+        <div *ngIf="training.Trainers">
+          <div class="row">
+            <div class="col-lg-6">
+              <h5 class="card-title">Trainers</h5>
+              <div id="add-trainer" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #trainer="ngForm" (ngSubmit)="OnTrainerSubmitted(trainer.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Trainer</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_trainer>×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input type="text" name="Name" class="form-control" placeholder="Name" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: right;">
+              <button type="button" class="btn btn-info ai-btn btn-rounded" data-toggle="modal" data-target="#add-trainer">Add Trainer</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="training.Trainers.length == 0">No trainers added yet</div>
+          <div class="m-t-30" *ngIf="training.Trainers.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let trainer of training.Trainers">
+                  <td>{{ trainer.Name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!training.Trainees"><em>Loading...</em></p>
+        <div *ngIf="training.Trainees">
+          <div class="row">
+            <div class="col-10">
+              <h5 class="card-title">Trainees</h5>
+              <div id="add-user" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #clientData="ngForm" (ngSubmit)="onClickSubmit(userData.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input type="text" name="Email" class="form-control" placeholder="Email" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-2">
+              <!--<button type="button" class="btn btn-info ai-btn btn-rounded" data-toggle="modal" data-target="#add-user">Add User</button>-->
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="trainees.length == 0">No trainees registered yet</div>
+          <div class="m-t-30" *ngIf="trainees.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let trainee of trainees">
+                  <td>{{ trainee.Sections[0].Name }}</td>
+                  <td>{{ trainee.Latitude }}</td>
+                  <td>{{ trainee.Longitude }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--Training Modal-->
+<button type="button" style="visibility: hidden;" data-toggle="modal" data-target="#init_training" #init_training></button>
+<div id="init_training" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <form #trainingData="ngForm" (ngSubmit)="OnCreateTraining(trainingData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">New Training</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_training>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12 m-b-20">
+                <label>Name</label>
+                <input type="text" name="Name" class="form-control" ngModel>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 m-b-20">
+                <label>Start Date</label>
+                <input id="example-date-input" type="date" name="StartDate" class="form-control" ngModel>
+              </div>
+              <div class="col-md-6 m-b-20">
+                <label>End Date</label>
+                <input id="example-date-input" type="date" name="EndDate" class="form-control" ngModel>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 m-b-20">
+                <label>Location</label>
+                <input type="text" name="Location" class="form-control" ngModel>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal" (click)="OnCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

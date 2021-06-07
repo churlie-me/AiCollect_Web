@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="col-md-7">
+    <label style="font-weight: 500;">
+      <span class="question_index questionText_Label" *ngIf ="holder">{{ holder.Questions.indexOf(question) + 1 }}</span>
+      {{question.QuestionText}}
+    </label>
+  </div>
+  <div class="col-md-5" style="text-align: right;">
+      <label>{{dataTypes[question.DataType]}}</label>
+  </div>
+</div>
+<ng-container *ngIf="question.DataType == 13">
+  <div style="margin-left: 38px;" *ngFor="let answer of question.Answers" [hidden]="!answer.AnswerText">
+    <img [src]="initImage(answer.AnswerText) | safeHtml" class="img-fluid" style="max-width: 200px;"/>
+  </div>
+</ng-container>
+<ng-container *ngIf="question.DataType != 13">
+  <ng-container *ngIf="question.EnumList != undefined">
+    <div style="margin-left: 38px;" *ngIf="action == 0">
+      <div *ngFor="let answer of question.Answers">{{ EnumDescription(question,answer.AnswerText) }}</div>
+    </div>
+
+    <!--Sigle Select-->
+    <div class="form-group" *ngIf="action == 1 && question.DataType == 21" style="margin-left: 38px;">
+      <select [(ngModel)]="question.Answers[0].AnswerText" class="form-control" ngModel>
+        <option value="undefined" selected *ngIf="question.Answers[0].AnswerText == undefined">Choose...</option>
+        <option *ngFor="let enum of question.EnumList.EnumValues" [value]="enum.Code" [selected]="enum.Code==question.Answers[0].AnswerText">{{ enum.Description }}</option>
+      </select>
+    </div>
+
+    <!--Multiselect-->
+    <div class="form-group row" *ngIf="action == 1 && question.DataType == 17" style="margin-left: 38px;">
+      <div class="form-check col-4" *ngFor="let enum of question.EnumList.EnumValues">
+        <input type="checkbox" id="flexCheckDefault-{{occurance}}-{{enum.OID}}" [checked]="IsChecked(question, enum.Code)" (change)="ChoicesChanged(question, enum.Code, $event)" />
+        <label for="flexCheckDefault-{{occurance}}-{{enum.OID}}">
+          {{ enum.Description }}
+        </label>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="question.EnumList == undefined">
+    <div *ngIf="action == 0" style="margin-left: 38px;">
+      <ng-container *ngFor="let answer of question.Answers">
+        <div *ngIf="question.DataType == 3">{{ answer.AnswerText | date: 'dd/MM/yyyy' }}</div>
+        <div *ngIf="question.DataType != 3">{{ answer.AnswerText }}</div>
+      </ng-container>
+    </div>
+    <div class="form-group" *ngIf="action == 1" style="margin-left: 38px;">
+      <input *ngIf="question.DataType == 1" type="text" class="form-control" [(ngModel)]="question.Answers[0].AnswerText" ngModel/>
+      <input *ngIf="question.DataType == 5" type="number" class="form-control" [(ngModel)]="question.Answers[0].AnswerText" ngModel/>
+      <input *ngIf="question.DataType == 3" type="date" class="form-control" [(ngModel)]="question.Answers[0].AnswerText" ngModel/>
+      <input *ngIf="question.DataType == 22" type="tel" class="form-control" [(ngModel)]="question.Answers[0].AnswerText" ngModel/>
+      <textarea *ngIf="question.DataType == 18" rows="5" class="form-control" [(ngModel)]="question.Answers[0].AnswerText" ngModel></textarea>
+    </div>
+  </ng-container>
+</ng-container>
+<hr style="border-top: 1px solid #f3f3f3;"/>
+
+  <ng-container *ngIf="question.Answers.length > 0">
+    <!--question dependencies-->
+    <ng-container *ngFor="let dependency of question.Dependencies">
+      <!--for subsection dependencies-->
+      <div style="margin-left: 40px;">
+        <ng-container *ngIf="dependency.TargetObjectType == 2">
+          <h6>[Dependency {{question.Dependencies.indexOf(dependency) + 1}}]  {{dependency.Target.SubSection.Name}}</h6>
+          <ng-container *ngFor="let dependencyQuestion of dependency.Target.SubSection.Questions">
+            <ng-question [question]="dependencyQuestion" [action]="action" [holder]="dependency.Target.SubSection" [dependencies]="dependencies" [conditions]="conditions" [questionaire]="questionaire" [occurance]="question.Dependencies.indexOf(dependency)"></ng-question>
+          </ng-container>
+        </ng-container>
+      </div>
+      <!--subsection dependencies-->
+    </ng-container>
+    <!--question dependencies-->
+  </ng-container>
+
+  <!--conditions-->
+  <ng-container *ngIf="question.Conditions.length > 0 && question.Answers.length > 0">
+    <ng-container *ngFor="let condition of question.Conditions">
+      <ng-container *ngIf="question.Answers[0].AnswerText == condition.Answer.Code">
+        <!--SubSection Condition-->
+        <div style="margin-left: 40px;">
+          <ng-container *ngIf="condition.DataCollectionObectType == 2">
+            <h6>[SubSection] {{condition.Target.SubSection.Name}}</h6>
+            <ng-container *ngFor="let _question of getCondition(condition.Target.SubSection.Key).Questions">
+              <ng-question [question]="_question" [action]="action" [holder]="getCondition(condition.Target.SubSection.Key)"  [dependencies]="dependencies" [conditions]="conditions" [questionaire]="questionaire" [occurance]="0"></ng-question>
+            </ng-container>
+          </ng-container>
+        </div>
+        <!-- SubSection Condition-->
+      </ng-container>
+    </ng-container>
+  </ng-container>
+<!--conditions-->

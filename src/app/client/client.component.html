@@ -1,0 +1,271 @@
+<div class="row">
+  <!-- Column -->
+  <div class="col">
+    <a [routerLink]='["/configurations"]' [queryParams]='{Id: clientId }'>
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h1 class="text-white"><i class="ti-pie-chart"></i></h1>
+            </div>
+            <div>
+              <h5 class="card-title">Configurations</h5>
+              <h6 class="card-subtitle">March  2017</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 align-self-center">
+              <h2 class="font-light text-white">0</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <!-- Column -->
+  <!-- Column -->
+  <div class="col">
+    <div class="card card-inverse card-success">
+      <div class="card-body">
+        <div class="d-flex">
+          <div class="m-r-20 align-self-center">
+            <h1 class="text-white"><i class="icon-cloud-download"></i></h1>
+          </div>
+          <div>
+            <h5 class="card-title">Users</h5>
+            <h6 class="card-subtitle">March  2017</h6>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 align-self-center">
+            <h2 class="font-light text-white">0</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Column -->
+  <!-- Column -->
+  <div class="col">
+    <a [routerLink]='["/billing"]' [queryParams]='{Id: clientId }'>
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h1 class="text-white"><i class="ti-pie-chart"></i></h1>
+            </div>
+            <div>
+              <h5 class="card-title">Invoices</h5>
+              <h6 class="card-subtitle">March  2017</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 align-self-center">
+              <h2 class="font-light text-white">0</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <!-- Column -->
+  <!-- Column -->
+  <div class="col" *ngIf="authentication.User.IsAdmin" (click)="ClientProfile()">
+    <a data-toggle="modal" data-target="#client">
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h1 class="text-white"><i class="ti-pie-chart"></i></h1>
+            </div>
+            <div>
+              <h5 class="card-title">Client</h5>
+              <h6 class="card-subtitle">Profile</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 align-self-center">
+              <h5 class="font-light text-white" style="margin-top: 10px;"><i class="ti-write" aria-hidden="true"></i> Change</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <!-- Column -->
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!client"><em>Loading...</em></p>
+        <div *ngIf="client">
+          <div class="row">
+            <div class="col-9">
+              <h5 class="card-title">Client Users</h5>
+            </div>
+            <div class="col-3">
+              <button type="button" class="btn btn-info ai-btn btn-block btn-rounded" data-toggle="modal" data-target="#add-user">Add User</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="client.Users.length == 0">No users added yet</div>
+          <div class="m-t-40" *ngIf="client.Users.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                  <th>IsAdmin</th>
+                  <th>Email</th>
+                  <th *ngIf="this.authentication.User.IsAdmin">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of client.Users">
+                  <td>{{ user.Firstname }}</td>
+                  <td>{{ user.Lastname }}</td>
+                  <td>{{ user.UserName }}</td>
+                  <td>{{ user.IsAdmin }}</td>
+                  <td>{{ user.Email }}</td>
+                  <td *ngIf="this.authentication.User.IsAdmin">
+                    <div class="switch">
+                      <label><input type="checkbox" (change)="OnToggle($event, user)" [checked]="user.Enabled" [disabled]="user.IsAdmin"><span class="lever"></span>{{IsEnabled(user.Enabled)}}</label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#i_pleasewait" #i_pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="i_pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Add user-->
+<div id="add-user" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #userData="ngForm" (ngSubmit)="OnSubmit(userData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add User</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_user>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <input type="text" name="Email" class="form-control" placeholder="Email" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#activation" #activation><i class="ti-close" aria-hidden="true"></i></button>
+<div id="activation" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <h4 class="modal-title ml-4 mt-2" id="myModalLabel">Confirm</h4>
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_activation>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <label style="width: 100%; text-align: center;">You're about to disable this user, <br>are you sure about this action?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" (click)="OnCancel()">Cancel</button>
+        <button type="button" class="btn btn-info ai-btn waves-effect" data-dismiss="modal" (click)="ToggleActivation()"> Disable </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Client modal-->
+<div id="client" *ngIf="client" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="min-width: 650px;">
+    <div class="modal-content">
+      <form #clientData="ngForm" (ngSubmit)="OnSubmitClient(clientData.value)" enctype="multipart/form-data">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Client</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_client>×</button>
+        </div>
+        <div class="modal-body row">
+          <div class="col-7">
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Name" name="Name" class="form-control" placeholder="Name" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Email" name="Email" class="form-control" placeholder="Email" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Contact" name="Contact" class="form-control" placeholder="Phone" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <input type="text" [(ngModel)]="client.Location" name="Location" class="form-control" placeholder="Address" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20" *ngIf="client.Users.length > 0">
+              <label>Administrator Email</label>
+              <input type="email" disabled [(ngModel)]="client.Users[0].Email" name="AdminEmail" class="form-control" placeholder="Admin Email" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <label>Plan</label>
+              <select disabled [(ngModel)]="client.Package.OID" name="Package" class="custom-select col-12" id="inlineFormCustomSelect" ngModel>
+                <option *ngIf="client.Package.OID == undefined" [value]="client.Package.OID" selected>Choose...</option>
+                <option *ngFor="let package of packages" [value]="package.OID" [selected]="client.Package.OID==package.OID">{{ package.Name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-5">
+              <div class="card">
+                  <div class="card-body">
+                      <label class="card-title">Logo</label>
+                      <input type="file" name="Logo" accept="image/png, image/jpeg" id="input-file-now" (change)="OnLogoChanged($event)" class="dropify" ngModel/>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

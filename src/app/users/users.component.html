@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!users"><em>Loading...</em></p>
+        <div *ngIf="users">
+          <div class="row">
+            <div class="col-9">
+              <h5 class="card-title">Accounts</h5>
+              <div *ngIf="user" id="add-user" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #uData="ngForm" (ngSubmit)="OnSubmit(uData.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add User</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_user>×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input [(ngModel)]="user.Email" type="text" name="Email" class="form-control" placeholder="Email" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-3">
+              <button type="button" class="btn btn-info ai-btn btn-block btn-rounded" data-toggle="modal" data-target="#add-user" (click)="InitUser($event)">Add User</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="users.length == 0">No users added yet</div>
+          <div class="m-t-30" *ngIf="users.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                  <th>IsAdmin</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{ user.Firstname }}</td>
+                  <td>{{ user.Lastname }}</td>
+                  <td>{{ user.UserName }}</td>
+                  <td>{{ user.IsAdmin }}</td>
+                  <td>{{ user.Email }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete" (click)="InitUser($event)" data-toggle="modal" data-target="#delete_user" id="{{user.OID}}"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Please confirm Modal-->
+<div id="delete_user" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_confirmed>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div class="col-lg-12">
+          <label>Are you sure you want delete this user?</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info ai-btn waves-effect" (click)="DeleteUser()">Delete</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#i_pleasewait" #i_pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="i_pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

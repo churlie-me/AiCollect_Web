@@ -1,0 +1,269 @@
+<header *ngIf="authentication.User == null">
+  <!--<nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow'>
+    <div class="container">
+      <a class="navbar-brand" [routerLink]='["/"]'>AICollectShell</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded" (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a class="nav-link text-dark" [routerLink]='["/"]'>Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/counter"]'>Counter</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/fetch-data"]'>Fetch data</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/signin"]'>SignIn</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>-->
+
+
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <!-- Logo will be here -->
+        <a class="navbar-brand" [routerLink]='["/"]'>
+          <img src="assets/images/logo@2x.png" style="width: 24px;" alt="AI Collect" />
+          <span style="vertical-align: middle;" *ngIf="Client">{{ Client.Name }}</span>
+          <span class="font-weight-normal" style="vertical-align: middle; " *ngIf="!Client">aiCollect</span>
+        </a>
+        <!-- This is the navigation menu -->
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto stylish-nav">
+            <li class="nav-item"> <a class="nav-link" [routerLink]='["/"]' >Home</a> </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" [routerLink]='["/agriculture"]'>Agriculure End To End</a>
+                <a class="dropdown-item" [routerLink]='["/business_intelligence"]'>Audits & Business Intelligence</a>
+              </div>
+            </li>
+            <li class="nav-item"> <a class="nav-link" [routerLink]='["/aboutus"]'>About Us</a> </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Use Cases</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" [routerLink]='["/auditing"]'>Audits & Compliance</a>
+                <a class="dropdown-item" [routerLink]='["/assettracking"]'>Asset Tracking</a>
+                <a class="dropdown-item" [routerLink]='["/opinionpolls"]'>Opinion Polls</a>
+                <a class="dropdown-item" [routerLink]='["/_inspections"]'>Inspections</a>
+                <a class="dropdown-item" [routerLink]='["/inventory"]'>Inventory Management</a>
+                <a class="dropdown-item" [routerLink]='["/visualisation"]'>Data Visualisation</a>
+              </div>
+            </li>
+<!--            <li class="nav-item"> <a class="nav-link" [routerLink]='["/pricing"]'>Pricing</a> </li>-->
+<!--            <li class="nav-item"> <a class="nav-link" [routerLink]='["/careers"]'>Careers</a> </li>-->
+            <li class="nav-item"> <a class="nav-link mr-4" [routerLink]='["/contactus"]'>Contact Us</a> </li>
+            <li class="nav-item"> <a class="m-t-5 btn btn-sm border-0 mr-2 rounded-0 nav-link" [routerLink]='["/signin"]' style="width:100px; border: 1px solid #fff !important; color: #fff;">SignIn</a> </li>
+            <li class="nav-item"> <a class="m-t-5 btn btn-sm btn-outline-light rounded-0 " [routerLink]='["/"]' >Free Trial</a> </li>
+          </ul>
+        </div>
+      </nav>
+
+
+
+</header>
+
+
+<!-- ============================================================== -->
+<!-- Topbar header - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<header class="topbar"  *ngIf="authentication.User != null">
+  <nav class="navbar top-navbar navbar-expand-md fixex-top navbar-dark bg-primary ">
+    <!-- ============================================================== -->
+    <!-- Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#!">
+        <!-- Logo icon -->
+        <b>
+          <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+          <!-- Dark Logo icon -->
+          <!--<img src="assets/images/logo@2x.png" alt="AI" class="dark-logo" />-->
+          <!-- Light Logo icon -->
+          <img src="assets/images/ic_group_logo.png" alt="AI" class="light-logo" style="height: 44px;" />
+        </b>
+        <!--End Logo icon -->
+        <!-- Logo text --><span>
+          <!-- dark Logo text -->
+          <!--<img src="assets/images/logo-text.png" alt="Collect" class="dark-logo" />-->
+          <!-- Light Logo text -->
+          <!--<img src="assets/images/logo-light-text.png" class="light-logo" alt="Collect" />-->
+        </span>
+      </a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-collapse">
+      <!-- ============================================================== -->
+      <!-- toggle and nav items -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav mr-auto mt-md-0">
+        <!-- This is  -->
+        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+        <!-- ============================================================== -->
+        <!-- Search -->
+        <!-- ============================================================== -->
+        <!--<li class="nav-item hidden-sm-down search-box">
+          <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+          <form class="app-search">
+            <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+          </form>
+        </li>-->
+      </ul>
+      <!-- ============================================================== -->
+      <!-- User profile and search -->
+      <!-- ============================================================== -->
+      <ul class="navbar-nav my-lg-0">
+        <!-- ============================================================== -->
+        <!-- Comment -->
+        <!-- ============================================================== -->
+        <!--<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="mdi mdi-message"></i>
+            <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
+            <ul>
+              <li>
+                <div class="drop-title">Notifications</div>
+              </li>
+              <li>
+                <div class="message-center">
+                  <a href="#">
+                    <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
+                    <div class="mail-contnet">
+                      <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span>
+                    </div>
+                  </a>
+                  <a href="#">
+                    <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
+                    <div class="mail-contnet">
+                      <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span>
+                    </div>
+                  </a>
+                  <a href="#">
+                    <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
+                    <div class="mail-contnet">
+                      <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span>
+                    </div>
+                  </a>
+                  <a href="#">
+                    <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
+                    <div class="mail-contnet">
+                      <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span>
+                    </div>
+                  </a>
+                </div>
+              </li>
+              <li>
+                <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+              </li>
+            </ul>
+          </div>
+        </li>-->
+        <!-- ============================================================== -->
+        <!-- End Comment -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Profile -->
+        <!-- ============================================================== -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="assets/images/avatar/avatar.png" alt="user" class="profile-pic" />
+          </a>
+          <div class="dropdown-menu dropdown-menu-right scale-up">
+            <ul class="dropdown-user">
+              <!--<li>
+                <div class="dw-user-box">
+                  <div class="u-img"><img src="assets/images/avatar/avatar.png" alt="user"></div>
+                  <div class="u-text">
+                    <h4>Steave Jobs</h4>
+                    <p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                  </div>
+                </div>
+              </li>-->
+              <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+              <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+              <li><a [routerLink]="['/signout']" (click)="authentication.Logout()"><i class="fa fa-power-off"></i> Logout</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" *ngIf="authentication.User != null">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- User profile -->
+    <div class="user-profile" style="background: url('assets/images/user-info.jpg') no-repeat;">
+      <!-- User profile image -->
+      <div class="profile-img"> <img src="assets/images/avatar/avatar.png" alt="user" /> </div>
+      <!-- User profile text-->
+      <div class="profile-text">
+        <a href="#" aria-haspopup="true">{{authentication.User.Firstname}} {{authentication.User.Lastname}}</a>
+      </div>
+    </div>
+    <!-- End User profile text-->
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li *ngIf="authentication.User.ClientId == undefined">
+          <a class="waves-effect waves-dark" [routerLink]="['/']"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId != undefined">
+          <a class="waves-effect waves-dark" [routerLink]='["/client"]' [queryParams]="{Id: authentication.User.ClientId}"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId == undefined">
+          <a class="waves-effect waves-dark" [routerLink]="['/clients']"><i class="mdi mdi-account-card-details"></i><span class="hide-menu">Clients </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId == undefined">
+          <a class="waves-effect waves-dark" [routerLink]='["/users"]'><i class="mdi mdi-account-box"></i><span class="hide-menu">User Accounts </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId != undefined">
+          <a class="waves-effect waves-dark" [routerLink]='["/users"]' [queryParams]="{clientId: authentication.User.ClientId}"><i class="mdi mdi-account-box"></i><span class="hide-menu">User Accounts </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId != undefined">
+          <a class="waves-effect waves-dark" [routerLink]='["/configurations"]' [queryParams]="{Id: authentication.User.ClientId}"><i class="mdi mdi-book-open"></i><span class="hide-menu">Configurations </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId == undefined">
+          <a class="waves-effect waves-dark" [routerLink]="['/templates']" ><i class="mdi mdi-book-open"></i><span class="hide-menu">Templates </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId == undefined">
+          <a class="waves-e ffect waves-dark" [routerLink]="['/billing']"><i class="mdi mdi-book-open"></i><span class="hide-menu">Billing </span></a>
+        </li>
+        <li *ngIf="authentication.User.ClientId == undefined">
+          <a class="waves-effect waves-dark" [routerLink]="['/packages']"><i class="mdi mdi-book-open"></i><span class="hide-menu">Packages </span></a>
+        </li>
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+  <!-- Bottom points-->
+  <div class="sidebar-footer">
+    <!-- item--><a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
+    <!-- item--><a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
+    <!-- item--><a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+  </div>
+  <!-- End Bottom points-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

@@ -1,0 +1,32 @@
+<section id="wrapper" class="login-register" style="background-image:url('assets/images/group_316.jpg'); background-size: cover;">
+  <div class="login-box card">
+    <div class="card-body">
+      <form #reset="ngForm" class="form-horizontal" (ngSubmit)="OnSubmit(reset.value)" id="loginform">
+        <a href="javascript:void(0)" class="text-center db"><img src="assets/images/ic_logo.png" style="width: 24px;" alt="AI"><br><span>AiCollect</span></a>
+        <div class="text-center mb-3" style="font-size: 20px;">Forgot Password</div>
+        <div class="form-group m-t-30 text-center" *ngIf="authentication.FailedAuthentication">
+          <label class="text-danger">Password mismatch</label>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <input class="form-control" type="password" required="" placeholder="Password" name="Password" ngModel>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <input class="form-control" type="password" required="" placeholder="Confirm Password" name="CPassword" ngModel>
+          </div>
+        </div>
+        <div class="form-group text-center m-t-20">
+          <div class="col-xs-12">
+            <button *ngIf="!isBusy" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Submit</button>
+            <button *ngIf="isBusy" class="btn btn-info btn-lg btn-block" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Please...
+          </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

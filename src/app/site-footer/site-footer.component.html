@@ -1,0 +1,51 @@
+<footer *ngIf="!(this.location.path().includes('registration') || this.location.path() == '/signin' || this.location.path().includes('/otp') || this.location.path().includes('/resetpassword') || this.location.path() == '/forgot')" class="footer row" style="left: 0;position: inherit;">
+  <div class="footer__main col-md-12" >
+    <div class="container">
+      <div class="row">
+        <!--<div class="col-lg-3 col-md-6"><img src="assets/images/ic_aicollect_ft_max.png" alt="AICollect" style="width: 150px;"/>
+          <p class="m-t-30 text-white">
+            <span >AI Collect</span> is premium quality admin dashboard template with flat design. It is fully responsive admin dashboard template built with Bootstrap Framework, HTML5 & CSS3, Media query. </p>
+        </div>-->
+        <div class="col-lg-3 col-md-6">
+          <h3 class="footer__links-title">Use Cases</h3>
+          <ul class="footer__links list-icons">
+            <li class="footer__link"><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Agriculture Treaceability</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Market Audits</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Asset Tracking</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Inspection</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Asset Management</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Data Visualisation</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h3 class="footer__links-title">Resources</h3>
+          <ul class="footer__links list-icons">
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Help Resources</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Documentation</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h3 class="footer__links-title">Our Company</h3>
+          <ul class="footer__links list-icons">
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> About</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Team</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Careers</a></li>
+            <li><a href="#" class="footer__link-item"><i class="ti-angle-right"></i> Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 fix-width footer__download" >
+      <div style="text-align: center;">
+          <img src="assets/images/google_play_badge.png" alt="Play Store" style="width: 220px;margin-right: 20px;"/>
+          <img src="assets/images/apple_store_badge.png" alt="Apple Store" style="width: 220px;"/>
+      </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-md-12 footer__copy-right" >
+      <div class='text-center'>
+          <span> &copy; Copyright 2020. ROCKSIDE CONSULT LTD<!-- <a  href="#" target="_blank">Rockside Consult LTD</a>--></span>
+      </div>
+  </div>
+</footer>

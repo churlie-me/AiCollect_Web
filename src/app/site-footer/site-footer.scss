@@ -1,0 +1,44 @@
+.footer {
+  &__main {
+    background-color: #03045E !important;
+    padding: 100px 0 ;
+  }
+
+  &__links-title {
+    color: white !important;
+    border-bottom: 1px solid rgba(#eee6e6,.7) !important;
+    padding-bottom: 5px;
+  }
+
+  &__links {
+    padding: 10px;
+    padding-top: 5px;
+  }
+
+  &__link {
+
+
+  }
+
+  &__link-item {
+    &:link,
+    &:active,
+    &:visited {
+
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__download {
+    background-color: rgba(#26c6da,.2);
+    padding: 1.6rem 0;
+  }
+
+  &__copy-right {
+    padding: .8rem;
+  }
+}
+

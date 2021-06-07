@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!questionaires"><em>Loading...</em></p>
+        <div *ngIf="questionaires">
+          <div class="row">
+            <div class="col-6">
+              <h5>Questionaires</h5>
+            </div>
+            <div class="col-3">
+              <a class="btn btn-info ai-btn btn-rounded btn-block" [routerLink]='["/options"]' [queryParams]="{action: 'questionaire', Configuration_Id: Id }" >Create From Template</a>
+            </div>
+            <div class="col-3">
+              <a class="btn btn-info ai-btn btn-rounded btn-block" [routerLink]='["/architect"]' [queryParams]="{Configuration_Id: Id, action: 'questionaire' }" >Create New Questionaire</a>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="questionaires.length == 0">You have no questionaires added yet</div>
+          <div class="m-t-40" *ngIf="questionaires.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let questionaire of questionaires">
+                  <td><a [routerLink]='["/architect"]' [queryParams]="{Id: questionaire.OID, Configuration_Id: Id, action: 'questionaire' }">{{ questionaire.Name }}</a></td>
+                  <td>{{ questionaire.Latitude }}</td>
+                  <td>{{ questionaire.Longitude }}</td>
+                  <td>{{ questionaire.Status }}</td>
+                  <td>
+                    <a class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" [routerLink]='["/architect"]' [queryParams]="{Id: questionaire.OID, Configuration_Id: Id, action: 'questionaire' }">
+                      <i class="ti-write" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" [routerLink]='["/overview"]' [queryParams]="{Id:questionaire.Key, type: 'questionaire',Configuration_Id: Id}"><i class="ti-eye" aria-hidden="true"></i></a>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" data-target="#delete_questionaire" id="{{questionaire.Key}}" (click)="SetQuestionaire($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Please confirm Modal-->
+<div id="delete_questionaire" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_confirmed>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div class="col-lg-12">
+          <label>Are you sure you want delete this questionaire?<br> <label style="color: #f00;">Please note : All sections linked to it will be deleted</label></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info ai-btn waves-effect" (click)="DeleteQuestionaire()">Delete</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#pleasewait" #pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

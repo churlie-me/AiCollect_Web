@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!bills"><em>Loading...</em></p>
+        <div *ngIf="bills">
+          <div class="row">
+            <div class="col-9">
+              <h5 class="card-title">Invoices</h5>
+              <div id="add-bill" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #invoiceData="ngForm" (ngSubmit)="onClickSubmit(invoiceData.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Invoice</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input type="text" name="Email" class="form-control" placeholder="Email" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-3">
+              <button type="button" class="btn btn-info ai-btn btn-block btn-rounded" data-toggle="modal" data-target="#add-user">Add Invoice</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="bills.length == 0">No invoices added yet</div>
+          <div class="m-t-30" *ngIf="bills.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Invoice No.</th>
+                  <th>Billing Date</th>
+                  <th>Bill</th>
+                  <th>Client</th>
+                  <th>Payment Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let bill of bills">
+                  <td>{{ bill.InvoiceNo }}</td>
+                  <td>{{ bill.BillingDate }}</td>
+                  <td>{{ bill.Bill }}</td>
+                  <td>{{ bill.Client.Name }}</td>
+                  <td>{{ paymentStatuses[bill.PaymentStatus] }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,785 @@
+<div class="row page-titles">
+  <div class="col-md-5 col-8 align-self-center">
+      <h3 class="text-themecolor m-b-0 m-t-0">Architecture <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" data-target="#init_questionaire" #init_questionaire><i class="ti-write" aria-hidden="true"></i> Edit</button></h3>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+          <li class="breadcrumb-item">Configuration</li>
+          <li class="breadcrumb-item active">Architecture</li>
+      </ol>
+  </div>
+  <div class="col-md-7" style="text-align: right;">
+      <button class="btn btn-outline-success m-t-15 m-r-5" style="width: 120px;" (click)="OnCancel()">Cancel</button>
+      <button class="btn btn-success m-t-15" style="width: 120px;" (click)="OnSave()">Save</button>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-4" style="background-color: #fff;">
+          <div class="m-r-10 align-self-center" style="padding: 8px 21px;">
+              <h6>Sections</h6>
+          </div>
+          <div class="row" style="margin-bottom: 10px;">
+              <div class="col-lg-6 col-md-6">
+                  <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" data-target="#create_section" (click)="OnInitSection($event)">Section</button>
+              </div>
+              <div class="col-lg-6 col-md-6" *ngIf="Section">
+                  <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" data-target="#create_sub_section" (click)="OnInitSubSection($event)">Sub Section</button>
+              </div>
+          </div>
+
+          <div *ngIf="Section != undefined || SubSection != undefined" class="m-b-40">
+              <div class="m-r-10 align-self-center" style="padding: 8px 21px;">
+                  <h6>Basic</h6>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="1" id="21" data-target="#question">Single Choice</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="3" id="17" data-target="#question">Multi Choice</button>
+                  </div>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="2" id="5" data-target="#question">Numeric</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="2" id="1" data-target="#question">Text</button>
+                  </div>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="2" id="3" data-target="#question">Date</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="2" id="22" data-target="#question">Telephone</button>
+                  </div>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="5" id="4" data-target="#question">Time</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="4" id="23" data-target="#question">Map</button>
+                  </div>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="2" id="7" data-target="#question">Memo</button>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="5" id="24" data-target="#question">Location</button>
+                  </div>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                <div class="col-lg-6 col-md-6">
+                    <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="2" id="18" data-target="#question">Text Block</button>
+                </div>
+              </div>
+              <div class="m-r-10 align-self-center" style="padding: 8px 21px;">
+                  <h6>Media</h6>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                  <div class="col-lg-6 col-md-6">
+                      <button class="btn btn-block btn-outline-secondary" type="button" data-toggle="modal" (click)="Init_Question($event)" accesskey="2" id="13" data-target="#question">Image</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-8" style="padding: 10px 10px; background-color: #eee6e6;">
+          <div class="m-r-20" style="padding: 0px 21px;">
+              <h5>Preview</h5>
+          </div>
+          <div *ngIf="!Sections" style="text-align: center;">Content Loading...</div>
+          <div style="overflow-y: auto; overflow-x: hidden; max-height: 400px;" class="sections" *ngIf="Sections">
+          <div id="accordion" class="panel-group">
+              <div class="panel panel-default" [hidden]="section.Deleted" *ngFor="let section of Sections" id="{{section.Key}}" (click)="OnSelectSection($event)">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" style="background-color: white;padding: 10px 10px;border: 1px solid #c7c2c2;">
+                    <div class="row">
+                        <div class="col-md-8"><label class="text-bold" style="font-weight: bold;">{{section.Name}}</label></div>
+                        <div class="col-md-4" style="text-align: right;">
+                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" id="{{section.Key}}" data-target="#create_section" (click)="OnInitSection($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" id="{{section.Key}}" data-target="#delete" (click)="OnInitSection($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline expand-section" (click)="ToggleSection($event)"><i class="ti-angle-down" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-collapse collapse show" style="border: 1px solid #c7c2c2;">
+                    <div class="card-body" style="background-color: white;">
+                      <div class="panel-default" [hidden]="question.Deleted" *ngFor="let question of section.Questions" id="{{question.Key}}">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion">
+                            <div class="row">
+                                <div class="col-md-7"><label>{{question.QuestionText}}</label></div>
+                                <div class="col-md-5" style="text-align: right;">
+                                    <label>{{dataTypes[question.DataType]}}</label>
+                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" data-target="#question" value="{{section.Key}}" id="{{question.Key}}" (click)="OnEditQuestion($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" data-target="#delete" value="{{section.Key}}" id="{{question.Key}}" (click)="OnDeleteQuestion($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <!--Sub Sections-->
+                      <div class="panel-default" [ngClass]="{'subsection_active':  subSection.IsSelected, 'subsection_inactive': !subSection.IsSelected }" [hidden]="subSection.Deleted" *ngFor="let subSection of section.SubSections" id="{{subSection.Key}}" (click)="OnInitSubSection($event, true)"style="margin-bottom: 8px">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" style="background: #fff;">
+                            <div class="row">
+                                <div class="col-md-7"><label style="font-weight: bold; margin-left: 30px;">{{subSection.Name}} (SubSection)</label></div>
+                                <div class="col-md-5" style="text-align: right;">
+                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" data-target="#create_sub_section" value="{{section.Key}}" id="{{subSection.Key}}" (click)="OnInitSubSection($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" data-target="#delete" value="{{section.Key}}" id="{{subSection.Key}}" (click)="OnDeleteSubSection($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline expand-subsection" (click)="ToggleSubSection($event)"><i class="ti-angle-down" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subsection-collapse collapse">
+                          <div class="card-body" style="background-color: white;">
+                            <div class="panel-default" [hidden]="question.Deleted" *ngFor="let question of subSection.Questions" id="{{question.Key}}">
+                              <div class="panel-heading" data-toggle="collapse" data-parent="#accordion">
+                                  <div class="row">
+                                      <div class="col-md-7"><label>{{question.QuestionText}}</label></div>
+                                      <div class="col-md-5" style="text-align: right;">
+                                          <label>{{dataTypes[question.DataType]}}</label>
+                                          <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" data-target="#question" data-value="{{subSection.Key}}" id="{{question.Key}}" (click)="OnEditSubSectionQuestion($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                                          <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="modal" data-target="#delete" data-value="{{subSection.Key}}" id="{{question.Key}}" (click)="OnDeleteSubSectionQuestion($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!--Create Section Modal-->
+<div id="create_section" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form *ngIf="Section" #architectData="ngForm" (ngSubmit)="OnCreateSection(architectData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Section</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_section>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Section</label>
+              <input [(ngModel)]="Section.Name" type="text" name="SName" class="form-control" placeholder="Name" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Description</label>
+              <textarea [(ngModel)]="Section.Description" rows="4" name="SDesc" class="form-control" placeholder="Name" ngModel></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<!--Create Section Modal-->
+<div id="create_sub_section" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form *ngIf="SubSection" #subData="ngForm" (ngSubmit)="OnCreateSubSection(subData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Sub Section</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_sub_section>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Sub Section</label>
+              <input type="text" [(ngModel)]="SubSection.Name" name="Name" class="form-control" placeholder="Name" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Modals-->
+<!--Init Template Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="visibility: hidden;" data-toggle="modal" data-target="#init_template" #init_template><i class="ti-close" aria-hidden="true"></i></button>
+<div id="init_template" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <form *ngIf="Template" #templateData="ngForm" (ngSubmit)="OnCreateTemplate(templateData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Template</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_template>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 m-b-10">
+              <label>Name</label>
+              <input [(ngModel)]="Template.Name" type="text" name="Name" class="form-control" placeholder="Name" ngModel>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 m-b-10">
+              <label>Template Type</label>
+              <select name="TemplateType" class="custom-select col-12" ngModel>
+                <option value="" selected>Choose...</option>
+                <option *ngFor="let key of typekeys" [value]="key">{{templateTypes[key]}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row m-b-10">
+            <label class="col-md-12">Category</label>
+            <div class="col-md-10 p-r-0">
+              <select [(ngModel)]="Template.Category.Name" name="Category" class="custom-select col-12" ngModel>
+                <option value="undefined" selected>Choose...</option>
+                <option *ngFor="let category of Categories" [value]="category.Key">{{ category.Name }}</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-secondary btn-block" style="height: 100%;" data-toggle="modal" (click)="InitCategory()" data-target="#questionaire_category">Add</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 m-b-10">
+              <label>Description</label>
+              <textarea name="Description" class="form-control" rows="3" placeholder="Description" ngModel></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal" (click)="OnCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<!--Init Questionaire Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="visibility: hidden;" data-toggle="modal" data-target="#init_questionaire" #init_questionaire><i class="ti-close" aria-hidden="true"></i></button>
+<div id="init_questionaire" class="modal fade in" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <form *ngIf="Questionaire" #questionaireData="ngForm" (ngSubmit)="OnCreateQuestionaire(questionaireData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Questionaire</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_questionaire>×</button>
+        </div>
+        <div class="modal-body" style="height: 400px; overflow-y: auto;">
+          <div class="row">
+            <div class="col-md-12 m-b-20">
+              <label>Questionaire</label>
+              <input [(ngModel)]="Questionaire.Name" type="text" name="QuestionaireName" class="form-control" placeholder="Name" ngModel>
+            </div>
+            <!--Categories-->
+            <div style="width: 100%;">
+              <div class="row" style="padding: 0px 15px;">
+                <div class="col-md-8">
+                  <label for="notes" class="control-label">Categories</label>
+                </div>
+                <div class="col-md-4">
+                  <a data-toggle="modal" data-target="#questionaire_category" class="btn btn-outline-dark btn-block btn-icon" (click)="InitCategory()">
+                    <i class="icon-anchor"></i> Add
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-12" style="margin-top: 10px">
+                <table class="table table-bordered datatable" id="table-4">
+                  <thead>
+                    <tr>
+                      <th style="padding: .55rem;">Category</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let category of Questionaire.Categories" [hidden]="category.Deleted">
+                      <td>{{ category.Name }}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{category.Key}}" data-toggle="modal" data-target="#questionaire_category" (click)="InitCategory($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{category.Key}}" data-toggle="modal" data-target="#delete" (click)="InitCategory($event)" ><i class="ti-close" aria-hidden="true"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--Categories-->
+            <!--Regions-->
+            <div style="width: 100%;">
+              <div class="row" style="padding: 0px 15px;">
+                <div class="col-md-8">
+                  <label for="notes" class="control-label">Regions</label>
+                </div>
+                <div class="col-md-4">
+                  <a data-toggle="modal" data-target="#questionaire_region" class="btn btn-outline-dark btn-block btn-icon" (click)="InitRegion()">
+                    <i class="icon-anchor"></i> Add
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-12" style="margin-top: 10px">
+                <table class="table table-bordered datatable" id="table-4">
+                  <thead>
+                    <tr>
+                      <th style="padding: .55rem;">Region</th>
+                      <th>Prefix</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let region of Questionaire.Regions" [hidden]="region.Deleted">
+                      <td>{{ region.Name }}</td>
+                      <td>{{ region.Prefix }}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{region.Key}}" data-toggle="modal" data-target="#questionaire_region" (click)="InitRegion($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{region.Key}}" data-toggle="modal" data-target="#delete" (click)="InitRegion($event)" ><i class="ti-close" aria-hidden="true"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--Regions-->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal" (click)="OnCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Create Questionaire Category Modal-->
+<div id="questionaire_category" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form *ngIf="Category" #categoryData="ngForm" (ngSubmit)="OnCreateCategory(categoryData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Category</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_category>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Name</label>
+              <input type="text" [(ngModel)]="Category.Name" name="Name" class="form-control" placeholder="Name" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Create Questionaire Regional Modal-->
+<div id="questionaire_region" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form *ngIf="Region" #regionData="ngForm" (ngSubmit)="OnSaveRegion(regionData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Region</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_region>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Name</label>
+              <input type="text" [(ngModel)]="Region.Name" name="Name" class="form-control" placeholder="Name" ngModel>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Prefix</label>
+              <input type="text" [(ngModel)]="Region.Prefix" name="Prefix" class="form-control" placeholder="KLA" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Init Certification Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="visibility: hidden;" data-toggle="modal" data-target="#init_certification" #init_certification><i class="ti-close" aria-hidden="true"></i></button>
+<div id="init_certification" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <form #certificationData="ngForm" (ngSubmit)="OnCreateCertification(certificationData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">New Certification</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_certification>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Name</label>
+              <input type="text" name="Name" class="form-control" placeholder="Name" ngModel>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <label>Question Type</label>
+              <select name="CertificationType" class="custom-select col-12" ngModel>
+                <option selected>Choose...</option>
+                <option *ngFor="let key of certificationKeys" [value]="key">{{certificationTypes[key]}}</option>
+              </select>
+            </div>
+            <div class="col-md-12 m-b-20">
+              <label>Description</label>
+              <textarea rows="3" class="form-control" name="Description" ngModel></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal" (click)="OnCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<!--Question Modal-->
+<div *ngIf="Question != null" id="question" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" #x_question>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #questionData="ngForm" (ngSubmit)="OnSubmitQuestion(questionData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Question</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #closeSingleChoiceQuestion>×</button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto; overflow-x: hidden; max-height: 380px;">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label>Question</label>
+              <input type="text" [(ngModel)]="Question.QuestionText" name="QuestionText" class="form-control" placeholder="Name" ngModel />
+            </div>
+            <div class="form-group col-md-12">
+              <label>Data Type</label>
+              <select [(ngModel)]="Question.DataType" name="DataType" class="custom-select col-12" ngModel>
+                <option>Choose...</option>
+                <option *ngFor="let key of keys" [value]="key" >{{dataTypes[key]}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-12" style="margin-bottom: 0;">
+              <div class="demo-checkbox">
+                <input type="checkbox" id="basic_checkbox_1" name="Required" class="filled-in" [checked]="Question.Required" (change)="ChangeRequiredState($event)">
+                <label for="basic_checkbox_1">Required</label>
+              </div>
+            </div>
+
+            <!--Dependencies-->
+            <div *ngIf="Question.DataType == 5" class="form-group col-md-12" style="margin-bottom: 0;">
+              <div class="demo-checkbox">
+                <input type="checkbox" id="basic_checkbox_11" name="Required" class="filled-in" [checked]="Question.Dependencies != undefined" (change)="DependencyChanged($event)">
+                <label for="basic_checkbox_11">Add Dependencies</label>
+              </div>
+            </div>
+            <div *ngIf="Question.DataType == 5 && Question.Dependencies" style="padding: 0px 15px;">
+              <div class="row">
+                <div class="col-md-7">
+                  <label for="notes" class="control-label">Depedencies</label>
+                </div>
+                <div class="col-md-5">
+                  <a class="btn btn-outline-dark btn-block btn-icon" data-toggle="modal" data-target="#dependency" (click)="InitDependency()">
+                    <i class="icon-anchor"></i> Add Dependency
+                  </a>
+                </div>
+                <div style="width: 100%;" *ngIf="Question != null">
+                  <div class="col-md-12" style="margin-top: 10px">
+                    <table class="table table-bordered datatable" id="table-4">
+                      <thead>
+                        <tr>
+                          <th style="padding: .55rem;">Sub Section Name</th>
+                          <th style="padding: .55rem;">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let dependency of Question.Dependencies" [hidden]="dependency.Deleted">
+                          <td>{{ Section.SubSections[Question.Dependencies.indexOf(dependency)].Name }}</td>
+                          <td>
+                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{dependency.Key}}" data-toggle="modal" data-target="#dependency" (click)="InitDependency($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{dependency.Key}}" data-toggle="modal" data-target="#delete" (click)="InitDependency($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Dependencies-->
+
+            <div class="form-group col-md-12" style="margin-bottom: 0;" *ngIf="Question.QuestionType == 1">
+              <div class="demo-checkbox">
+                <input type="checkbox" id="basic_checkbox_2" name="Skip" class="filled-in" [checked]="Question.Conditions != undefined" (change)="SkipConditionChanged($event)">
+                <label for="basic_checkbox_2">Skip Condition</label>
+              </div>
+            </div>
+            <div *ngIf="Condition" style="width: 100%;">
+              <div class="form-group col-md-12">
+                <label>Target Answer <i style="color: orangered;">(The answer that the next question will be based on)</i></label>
+                <select [(ngModel)]="Condition.Answer.Code" name="Answer" class="custom-select col-12" ngModel>
+                  <option value="undefined" selected>Choose...</option>
+                  <option *ngFor="let enum of Question.EnumList.EnumValues" [value]="enum.Code">{{enum.Description}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Target</label>
+                <select [(ngModel)]="Condition.DataCollectionObectType" name="DataCollectionObectType" class="custom-select col-12" (change)="TargetChanged($event.target.value)" ngModel>
+                  <option value="undefined" selected>Choose...</option>
+                  <option *ngFor="let key of dataCollectionObectTypeKeys" [value]="key">{{dataCollectionObectTypes[key]}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12" *ngIf="Condition.DataCollectionObectType == 0">
+                <label>Target Section</label>
+                <select [(ngModel)]="Condition.Target.Section.Key" name="TargetSection" class="custom-select col-12" (change)="TargetSectionChanged($event.target.value)" ngModel>
+                  <option value="undefined" selected>Choose...</option>
+                  <option *ngFor="let _section of Sections"  [value]="_section.Key">{{ _section.Name }}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12" *ngIf="TargetSection && Condition.DataCollectionObectType == 2">
+                <label>Target SubSection</label>
+                <select [(ngModel)]="Condition.Target.SubSection.Key" name="TargetSubSection" class="custom-select col-12" (change)="TargetSubSectionChanged($event.target.value)" ngModel>
+                  <option value="undefined" selected>Choose...</option>
+                  <option *ngFor="let _subSection of TargetSection.SubSections"  [value]="_subSection.Key">{{ _subSection.Name }}</option>
+                </select>
+              </div>
+              <!--Pick from current section-->
+              <div class="form-group col-md-12" *ngIf="TargetSection && Condition.DataCollectionObectType == 1">
+                <label>Target Question</label>
+                <select [(ngModel)]="Condition.Target.Question.Key" name="Target" class="custom-select col-12" (change)="TargetQuestionChanged()" ngModel>
+                  <option value="undefined" selected>Choose...</option>
+                  <option *ngFor="let question of TargetSection.Questions" [value]="question.Key">{{ question.QuestionText}}</option>
+                </select>
+              </div>
+              <!--Pick from current section-->
+              <!--Pick from current subsection-->
+              <div class="form-group col-md-12" *ngIf="TargetSubSection && Condition.DataCollectionObectType == 1">
+                <label>Target Question</label>
+                <select [(ngModel)]="Condition.Target.Question.Key" name="Target" class="custom-select col-12" (change)="TargetQuestionChanged()" ngModel>
+                  <option value="undefined" selected>Choose...</option>
+                  <option *ngFor="let question of TargetSubSection.Questions" [value]="question.Key">{{ question.QuestionText}}</option>
+                </select>
+              </div>
+              <!--Pick from current subsection-->
+            </div>
+          </div>
+          <div *ngIf="Question != null">
+            <div class="row" *ngIf="Question.QuestionType == 1 || Question.QuestionType == 3">
+              <div class="col-md-8">
+                <label for="notes" class="control-label">Enum Values</label>
+              </div>
+              <div class="col-md-4">
+                <a class="btn btn-outline-dark btn-block btn-icon" data-toggle="modal" data-target="#add_enum" (click)="InitEnum()">
+                  <i class="icon-anchor"></i> Add Option
+                </a>
+              </div>
+              <div style="width: 100%;" *ngIf="Question != null">
+                <div class="col-md-12" style="margin-top: 10px">
+                  <table class="table table-bordered datatable" id="table-4">
+                    <thead>
+                      <tr>
+                        <th style="padding: .55rem;">Code</th>
+                        <th style="padding: .55rem;">Description</th>
+                        <th style="padding: .55rem;">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let enum of Question.EnumList.EnumValues">
+                        <td>{{ enum.Code }}</td>
+                        <td>{{ enum.Description }}</td>
+                        <td>
+                          <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{enum.Key}}" data-toggle="modal" data-target="#add_enum" (click)="InitEnum($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                          <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" id="{{enum.Key}}" data-toggle="modal" data-target="#delete" (click)="InitEnum($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding: 5px 15px;" *ngIf="Question == null">
+            <div class="card" style="padding: 10px; width: 100%; text-align: center; margin-top: 10px;">No enum values added yet</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<!--Add Dependency-->
+<div id="dependency" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form *ngIf="Dependency" #dependencyD="ngForm" (ngSubmit)="OnSubmitDependency(dependencyD.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Dependency</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_dependency>×</button>
+        </div>
+        <div class="form-group col-md-12">
+          <label>Target SubSection</label>
+          <select [(ngModel)]="Dependency.TargetObjectKey" name="TargetObjectKey" class="custom-select col-12" ngModel>
+            <option value="undefined" selected>Choose...</option>
+            <option *ngFor="let section of Section.SubSections" [value]="section.Key">{{ section.Name}}</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!--Dependency-->
+
+<!--Add Enumeration Item-->
+<div id="add_enum" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form *ngIf="enumValue" #enumData="ngForm" (ngSubmit)="OnSubmitEnumeration(enumData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add Option</h4>
+          <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_enumeration>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Option</label>
+              <input [(ngModel)]="enumValue.Description" type="text" name="option" class="form-control" placeholder="Name" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!--Single Choice Modal-->
+
+
+<!--Delete Modal-->
+<div id="delete" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_delete>×</button>
+      </div>
+      <div class="modal-body">
+        <label>Are you sure you would like to delete this {{item_delete}}?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" *ngIf="item_delete == 'category'" class="btn btn-info ai-btn waves-effect" (click)="OnConfirmDeleteCategory()">Yes</button>
+        <button type="submit" *ngIf="item_delete == 'region'" class="btn btn-info ai-btn waves-effect" (click)="OnConfirmDeleteRegion()">Yes</button>
+        <button type="submit" *ngIf="item_delete == 'dependency'" class="btn btn-info ai-btn waves-effect" (click)="OnConfirmDeleteDependency()">Yes</button>
+        <button type="submit" *ngIf="item_delete == 'section'" class="btn btn-info ai-btn waves-effect" (click)="OnConfirmDeleteSection()">Yes</button>
+        <button type="submit" *ngIf="item_delete == 'subsection'" class="btn btn-info ai-btn waves-effect" (click)="OnConfirmDeleteSubSection()">Yes</button>
+        <button type="submit" *ngIf="item_delete == 'question'" class="btn btn-info ai-btn waves-effect" (click)="OnConfirmDeleteQuestion()">Yes</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#pleasewait" #pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Discard Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#discard" #discard><i class="ti-close" aria-hidden="true"></i></button>
+<div id="discard" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel"><i class="mdi mdi-information"></i> Warning</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_discard>×</button>
+      </div>
+      <div class="modal-body">
+        <label style="font-size: 17px;text-align: center;margin: 0 60px;">You have unsaved changes, are you sure you want to exit?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info ai-btn waves-effect" (click)="OnSave()">Save</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal" (click)="OnDiscardChanges()">Discard</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

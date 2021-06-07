@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!configurations"><em>Loading...</em></p>
+          <div *ngIf="configurations">
+            <div class="row">
+              <div class="col-9">
+                <h5 class="card-title">Configurations</h5>
+                <div id="configuration" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" #x_configuration>
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <form #configurationData="ngForm" *ngIf="configuration" (ngSubmit)="OnSubmit(configurationData.value)">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Configuration</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="form-group">
+                            <div class="col-md-12 m-b-20">
+                              <input type="text" [(ngModel)]="configuration.Name" name="Name" class="form-control" placeholder="Name" ngModel>
+                            </div>
+                            <div class="col-md-12 m-b-20">
+                              <label>Question Type</label>
+                              <select name="Type" [ngModel]="configuration.Type" class="custom-select col-12" id="inlineFormCustomSelect" ngModel>
+                                <option value="undefined" selected>Choose...</option>
+                                <option *ngFor="let key of keys" [value]="key">{{configurationTypes[key]}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                        </div>
+                      </form>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+              </div>
+              <div class="col-3">
+                <button type="button" class="btn btn-info ai-btn btn-block btn-rounded" data-toggle="modal" data-target="#configuration" (click)="SetConfiguration()">Add configuration</button>
+              </div>
+            </div>
+            <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="configurations.length == 0">You have no configurations added yet</div>
+            <div class="m-t-40" *ngIf="configurations.length > 0">
+              <table class='display nowrap table table-hover table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>File Name</th>
+                    <th>Type</th>
+                    <th>Version</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let configuration of configurations">
+                    <td><a [routerLink]='["/configuration"]' [queryParams]="{configuration_ID: configuration.OID, Id: Id }">{{ configuration.Name }}</a></td>
+                    <td>{{ configuration.FileName }}</td>
+                    <td>{{ configurationTypes[configuration.Type] }}</td>
+                    <td>{{ configuration.Version }}</td>
+                    <td>{{ configuration.Status }}</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" data-target="#configuration" id="{{configuration.OID}}" (click)="SetConfiguration($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" data-target="#delete_configuration" id="{{configuration.OID}}" (click)="SetConfiguration($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Please confirm Modal-->
+<div id="delete_configuration" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_confirmed>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div class="col-lg-12">
+          <label>Are you sure you want delete this configuration?<br> <label style="color: #f00;">Please note : All sections linked to it will be deleted</label></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info ai-btn waves-effect" (click)="DeleteConfiguration()">Delete</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#pleasewait" #pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

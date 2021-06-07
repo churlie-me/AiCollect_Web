@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!certifications"><em>Loading...</em></p>
+        <div *ngIf="certifications">
+          <div class="row">
+            <div class="col-6">
+              <h5 class="card-title">Certifications</h5>
+            </div>
+            <div class="col-3">
+              <a class="btn btn-info btn-block ai-btn btn-rounded" [routerLink]='["/options"]' [queryParams]="{ action: 'certification', Configuration_Id: Id }" >Create From Template</a>
+            </div>
+            <div class="col-3">
+              <a class="btn btn-info btn-block ai-btn btn-rounded" [routerLink]='["/architect"]' [queryParams]="{ Configuration_Id: Id, action: 'certification' }" >Create New Certification</a>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="certifications.length == 0">You have no certifications added yet</div>
+          <div class="m-t-40" *ngIf="certifications.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Key</th>
+                  <th>Certification Type</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let certification of certifications">
+                  <td><a [routerLink]='["/architect"]' [queryParams]="{Id: certification.OID , action:'certification'}">{{ certification.Name }}</a></td>
+                  <td>{{ certification.Key }}</td>
+                  <td>{{ certification.CerificationType }}</td>
+                  <td>{{ certification.Status }}</td>
+                  <td>
+                    <a class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" [routerLink]='["/architect"]' [queryParams]="{Id: certification.OID , action:'certification'}" title="Edit Certification"><i class="ti-write" aria-hidden="true"></i></a>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" data-target="#delete_certification" id="{{certification.Key}}" (click)="SetCertification($event)" title="Delete Certification"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Please confirm Modal-->
+<div id="delete_certification" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_confirmed>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div class="col-lg-12">
+          <label>Are you sure you want delete this certification?<br> <label style="color: #f00;">Please note : All sections linked to it will be deleted</label></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info ai-btn waves-effect" (click)="DeleteCertification()">Delete</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#pleasewait" #pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

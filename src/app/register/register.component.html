@@ -1,0 +1,89 @@
+<section id="wrapper" class="login-register" style="background-image:url('assets/images/group_316.jpg'); background-size: cover;">
+  <div class="login-box card">
+    <div class="card-body">
+      <form #credentials="ngForm" class="form-horizontal" (ngSubmit)="OnAccountCompleted(credentials.value)" id="loginform">
+        <a href="javascript:void(0)" class="text-center db"><img src="assets/images/ic_logo.png" style="width: 24px;" alt="AI"><br><span>AiCollect</span></a>  
+        <div class="row m-t-40">
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="col-xs-12">
+                <input class="form-control" type="text" required="" placeholder="Firstname" name="Firstname" ngModel>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="col-xs-12">
+                <input class="form-control" type="text" required="" placeholder="Lastname" name="Lastname" ngModel>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <input class="form-control" type="text" required="" placeholder="Username" name="UserName" ngModel>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <input class="form-control" type="password" required="" placeholder="Password" name="Password" ngModel>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <input class="form-control" type="password" required="" placeholder="Confirm Password" name="CPassword" ngModel>
+          </div>
+        </div>
+        <div class="form-group text-center m-t-20" style="margin-top: 70px;">
+          <div class="col-xs-12">
+            <button [disabled]="IsEnabled" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit" #btn_proceed>Proceed</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!--Please confirm Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#confirmed" #i_confirmed><i class="ti-close" aria-hidden="true"></i></button>
+<div id="confirmed" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_confirmed>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div class="col-lg-12">
+        <label>Your account registration has been complement<br> Please signin to proceed</label>
+        </div>
+        <button type="button" class="btn btn-sm btn-icon btn-info btn-outline m-t-30" style="width: 120px;" data-dismiss="modal" aria-hidden="true" (click)="OnSignIn()">SignIn</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#pleasewait" #pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+

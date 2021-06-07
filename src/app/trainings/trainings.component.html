@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!trainings"><em>Loading...</em></p>
+        <div *ngIf="trainings">
+          <div class="row">
+            <div class="col-9">
+              <h5 class="card-title">Trainings</h5>
+            </div>
+            <div class="col-3">
+              <a class="btn btn-info ai-btn btn-block btn-rounded" [routerLink]='["/training"]' [queryParams]="{Configuration_Id: Id}">Create New Training</a>
+            </div>
+          </div>
+          <div class="card" style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="trainings.length == 0">You have no trainings added yet</div>
+          <div class="m-t-30" *ngIf="trainings.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let training of trainings">
+                  <td><a [routerLink]='["/training"]' [queryParams]="{Configuration_Id: Id, Id: training.OID }">{{ training.Name }}</a></td>
+                  <td>{{ training.StartDate }}</td>
+                  <td>{{ training.EndDate }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#i_pleasewait" #i_pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="i_pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

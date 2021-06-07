@@ -1,0 +1,259 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="tab-content">
+      <div class="tab-pane active" id="main" role="tabpanel">
+      <p *ngIf="!reports"><em>Loading...</em></p>
+      <div *ngIf="reports">
+        <div class="row">
+          <div class="col-9">
+            <h5>Certifications Review</h5>
+          </div>
+        </div>
+        <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="reports.length == 0">You have no Certifications submitted yet</div>
+        <div class="m-t-20" *ngIf="reports.length > 0" style="overflow: auto;">
+          <a class="btn btn-outline-secondary m-r-10" style="min-width: 100px;" title="Download Excel" (click)='ExportExcel()'>
+            <i class="glyphicon glyphicon-new-window"></i> Excel
+          </a>
+          <a class="btn btn-outline-secondary" style="min-width: 100px;" title="Download CSV" (click)='ExportCsv()'>
+            <i class="glyphicon glyphicon-new-window"></i> Csv
+          </a>
+          <table id="certifications" class='m-t-20 display nowrap table table-hover table-striped table-bordered formatted-table'>
+            <thead>
+              <tr>
+                <th>Actions</th>
+                <th>Submitted By</th>
+                <th>Submitted On</th>
+                <th>Name</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Status</th>
+                <ng-container *ngFor="let section of reports[0].Certification.Sections">
+                  <ng-container *ngFor="let question of section.Questions">
+                    <th>{{ question.QuestionText }}</th>
+                    <ng-container *ngIf="question.Conditions.length > 0">
+                      <ng-container *ngFor="let condition of question.Conditions">
+                        {{ determineCondition(condition) }}
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <!--section subsections-->
+                  <ng-container *ngFor="let subsection of section.SubSections">
+                    <ng-container *ngIf="!isDependency(subsection.Key)">
+                      <ng-container *ngFor="let question of subsection.Questions">
+                        <th>{{ question.QuestionText }}</th>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <!--section subsections-->
+                </ng-container>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let report of reports">
+                <tr *ngIf="!report.Certification.Deleted">
+                  <td class="actions">
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline-secondary" data-toggle="modal" data-target="#cert_review" id="{{report.Certification.Key}}" (click)="InitReport($event, 0)" style="margin-right: 5px;"><i class="ti-eye" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline-secondary" data-toggle="modal" data-target="#cert_review" id="{{report.Certification.Key}}" (click)="InitReport($event, 1)" style="margin-right: 5px;"><i class="ti-pencil" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline-secondary" data-toggle="modal" data-target="#cert_delete" id="{{report.Certification.Key}}" (click)="InitReport($event, 2)" style="margin-right: 5px;"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                  <td>{{ report.Certification.CreatedBy }}</td>
+                  <td>{{ report.Certification.CreatedOn }}</td>
+                  <th>{{ report.Questionaire.Name }}</th>
+                  <td>{{ report.Questionaire.Latitude }}</td>
+                  <td>{{ report.Questionaire.Longitude }}</td>
+                  <td>{{ statuses[report.Questionaire.Status] }}</td>
+                  <ng-container *ngFor="let section of report.Certification.Sections">
+                    <!--section questions-->
+                    <ng-container *ngFor="let question of section.Questions">
+                      <ng-container *ngIf="question.Dependencies.length > 0 && question.Answers.length > 0">
+                        <ng-container *ngFor="let dependency of question.Dependencies">
+                          <ng-container *ngIf="dependency.TargetObjectType == 2">
+                            {{ determineDependency(question, dependency) }}
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <td>
+                        <!--question answer-->
+                        <ng-container *ngIf="question.DataType == 13">
+                          <div *ngFor="let answer of question.Answers" [hidden]="!answer.AnswerText">
+                            <img [src]="initImage(answer.AnswerText) | safeHtml" class="img-fluid" />
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="question.DataType != 13">
+                          <ng-container *ngIf="question.EnumList != undefined">
+                            <div *ngFor="let answer of question.Answers">{{ EnumDescription(question,answer.AnswerText) }}</div>
+                          </ng-container>
+                          <ng-container *ngIf="question.EnumList == undefined">
+                            <div *ngFor="let answer of question.Answers">{{ answer.AnswerText }}</div>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+
+                    <!--Subsection questions-->
+                      <ng-container *ngFor="let subsection of section.SubSections">
+                        <ng-container *ngIf="!isDependency(subsection.Key)">
+                          <ng-container *ngFor="let question of subsection.Questions">
+                            <td>
+                              <!--question answer-->
+                              <ng-container *ngIf="question.DataType == 13">
+                                <div *ngFor="let answer of question.Answers" [hidden]="!answer.AnswerText">
+                                  <img [src]="initImage(answer.AnswerText) | safeHtml" class="img-fluid" />
+                                </div>
+                              </ng-container>
+                              <ng-container *ngIf="question.DataType != 13">
+                                <ng-container *ngIf="question.EnumList != undefined">
+                                  <div *ngFor="let answer of question.Answers">{{ EnumDescription(question,answer.AnswerText) }}</div>
+                                </ng-container>
+                                <ng-container *ngIf="question.EnumList == undefined">
+                                  <div *ngFor="let answer of question.Answers">{{ answer.AnswerText }}</div>
+                                </ng-container>
+                              </ng-container>
+                            </td>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    <!--subsection questions-->
+                  </ng-container>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane" id="{{ dQn.Key }}-xyz" role="tabpanel" *ngFor="let dQn of dependencyQuestions">
+        <div class="p-20">
+          <table id="{{ dQn.Key }}" class='display nowrap table table-hover table-striped table-bordered m-t-10 formatted-table'>
+            <thead>
+              <tr>
+                <th>Questionaire Title</th>
+                <th *ngFor="let qn of dependencyHead(dQn.Key).Target.SubSection.Questions">{{ qn.QuestionText }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container >
+                <ng-container *ngFor="let _dependency of getTabDependencies(dQn.Key)">
+                  <tr *ngIf="!_dependency.Deleted" >
+                    <td>{{ linkIndentifier(_dependency) }}</td>
+                    <td *ngFor="let qn of _dependency.Target.SubSection.Questions">
+                      <!--question answer-->
+                      <ng-container *ngIf="qn.DataType == 13">
+                        <div *ngFor="let answer of qn.Answers" [hidden]="!answer.AnswerText">
+                          <img [src]="initImage(answer.AnswerText) | safeHtml" class="img-fluid" />
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="qn.DataType != 13">
+                        <ng-container *ngIf="qn.EnumList != undefined">
+                          <div *ngFor="let answer of qn.Answers">{{ EnumDescription(qn,answer.AnswerText) }}</div>
+                        </ng-container>
+                        <ng-container *ngIf="qn.EnumList == undefined">
+                          <div *ngFor="let answer of qn.Answers">{{ answer.AnswerText }}</div>
+                        </ng-container>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <ul class="nav nav-pills" style="margin: 10px 15px;">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#main" role="tab">Certifications</a>
+      </li>
+      <li class="nav-item" *ngFor="let dQn of dependencyQuestions">
+        <a class="nav-link" data-toggle="tab" href="#{{ dQn.Key }}-xyz" role="tab">{{ dQn.QuestionText }}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="cert_review" *ngIf="report" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 800px !important;">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #f8f8f8;">
+        <h4 class="modal-title" id="myModalLabel">{{ report.Questionaire.Name }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #closex>×</button>
+      </div>
+      <div class="modal-body" style="max-height: 450px; overflow-y: auto;">
+        <!--sections-->
+        <div *ngFor="let section of report.Certification.Sections">
+          <h6>[Section]{{ section.Name }}</h6>
+          <div *ngFor="let question of section.Questions">
+            <div>
+              <ng-question [question]="question" [action]="action" [holder]="section"  [dependencies]="dependencies" [conditions]="conditions" [questionaire]="report.Certification" [occurance]="0"></ng-question>
+            </div>
+          </div>
+
+          <!--subsection-->
+          <div *ngFor="let subSection of section.SubSections" style="margin-left: 40px;">
+            <ng-container *ngIf="!isDependency(subSection.Key) && !IsCondition(subSection.Key)">
+              <h6>[SubSection] {{ subSection.Name }}</h6>
+              <ng-container *ngFor="let question of subSection.Questions">
+                <ng-question [question]="question" [action]="action" [holder]="subSection"  [dependencies]="dependencies" [conditions]="conditions" [questionaire]="report.Certification" [occurance]="0"></ng-question>
+              </ng-container>
+            </ng-container>
+          </div>
+          <!--subsection-->
+        </div>
+        <!--sections-->
+      </div>
+      <div class="modal-footer" *ngIf="action == 1">
+        <button *ngIf="isBusy" class="btn btn-info btn-sm ai-btn" type="button">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Please wait...
+        </button>
+        <button type="button" class="btn btn-info btn-sm ai-btn waves-effect" *ngIf="!isBusy" (click)="UpdateCertification()">Save</button>
+        <button type="button" class="btn btn-outline-info btn-sm ai-btn waves-effect" data-dismiss="modal" [disabled]="isBusy">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#info" #info><i class="ti-close" aria-hidden="true"></i></button>
+<div id="info" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Notification</h4>
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">Certification has been updated</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info btn-sm ai-btn waves-effect" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div id="cert_delete" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Warning</h4>
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #closec>×</button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">Are you sure, you would like to delete this field</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info btn-sm ai-btn waves-effect" data-dismiss="modal" [disabled]="isBusy">Cancel</button>
+        <button *ngIf="isBusy" class="btn btn-info btn-sm ai-btn" type="button">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Please wait...
+        </button>
+        <button type="button" class="btn btn-info btn-sm ai-btn waves-effect" data-dismiss="modal" (click)="DeleteCertification()" *ngIf="!isBusy">Confirm</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

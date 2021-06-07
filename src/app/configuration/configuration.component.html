@@ -1,0 +1,341 @@
+<h3>Configuration</h3>
+<div class="card card-body" *ngIf="!configuration">Loading...</div>
+<div class="row" *ngIf="configuration" style="margin-bottom: 20px;">
+  <div class="col">
+    <a class="card-link" [routerLink]='["/questionaires"]' [queryParams]="{Id: configuration_ID }">
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h3 class="text-white"><i class="ti-pie-chart"></i></h3>
+            </div>
+            <div>
+              <h6 class="card-title">Questionaires</h6>
+              <h6 class="card-subtitle">{{ configuration.CreatedOn }}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 align-self-center">
+              <h2 class="font-light text-white">{{ configuration.Questionaires.length }}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col" *ngIf="configuration.Type == configurationTypes.Agriculture">
+    <a class="card-link" [routerLink]='["/trainings"]' [queryParams]="{Id: configuration_ID }">
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h3 class="text-white"><i class="ti-pie-chart"></i></h3>
+            </div>
+            <div>
+              <h6 class="card-title">Trainings</h6>
+              <h6 class="card-subtitle">{{ configuration.CreatedOn }}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 align-self-center">
+              <h2 class="font-light text-white">{{configuration.Trainings.length}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col" *ngIf="configuration.Type == configurationTypes.Agriculture">
+    <a class="card-link" [routerLink]='["/certifications"]' [queryParams]="{Id: configuration_ID }">
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h3 class="text-white"><i class="ti-pie-chart"></i></h3>
+            </div>
+            <div>
+              <h6 class="card-title">Certifications</h6>
+              <h6 class="card-subtitle">{{ configuration.CreatedOn }}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 align-self-center">
+              <h2 class="font-light text-white">{{ configuration.Certifications.length }}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col" *ngIf="configuration.Type == configurationTypes.Agriculture">
+    <a class="card-link" [routerLink]='["/purchases"]' [queryParams]="{configuration_Id: configuration_ID }">
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h3 class="text-white"><i class="ti-pie-chart"></i></h3>
+            </div>
+            <div>
+              <h6 class="card-title">Purchases</h6>
+              <h6 class="card-subtitle">{{ configuration.CreatedOn }}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 align-self-center">
+              <h2 class="font-light text-white">{{ configuration.Purchases.length }}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      </a>
+  </div>
+  <div class="col" *ngIf="configuration.Type == configurationTypes.Agriculture">
+    <a class="card-link" [routerLink]='["/inspections"]' [queryParams]="{Id: configuration_ID }">
+      <div class="card card-inverse card-primary">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="m-r-20 align-self-center">
+              <h3 class="text-white"><i class="ti-pie-chart"></i></h3>
+            </div>
+            <div>
+              <h6 class="card-title">Inspections</h6>
+              <h6 class="card-subtitle">{{ configuration.CreatedOn }}</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 align-self-center">
+              <h2 class="font-light text-white">{{ configuration.Inspections.length }}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!users"><em>Loading...</em></p>
+        <div *ngIf="users">
+          <div class="row">
+            <div class="col-9">
+              <h5 class="card-title">Configuration Users</h5>          
+            </div>
+            <div class="col-3">
+              <button type="button" class="btn btn-info btn-block ai-btn btn-rounded" data-toggle="modal" data-target="#user" (click)="InitUser()">Add User</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="users.length == 0">No users added yet</div>
+          <div class="m-t-40" *ngIf="users.length > 0">
+            <table class='display nowrap table table-hover table-striped table-bordered'>
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                  <th>IsAdmin</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{ user.Firstname }}</td>
+                  <td>{{ user.Lastname }}</td>
+                  <td>{{ user.UserName }}</td>
+                  <td>{{ user.IsAdmin }}</td>
+                  <td>{{ user.Email }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" id="{{ user.Key }}" data-target="#user" (click)="ModifyUser($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" id="{{ user.Key }}" data-target="#delete" (click)="ModifyUser($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--User-->
+<div *ngIf="user" id="user" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #userData="ngForm" (ngSubmit)="AddConfigurationUser(userData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add User</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_configuration_user>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <div class="row">
+                <div class="col-12">
+                  <label>User Email</label>
+                  <select [(ngModel)]="user.Email" *ngIf="client != undefined" name="Email" class="custom-select col-12" id="inlineFormCustomSelect" (change)="UserChanged($event.target.value)" ngModel>
+                    <option selected value="undefined">Choose...</option>
+                    <option *ngFor="let user of client.Users" [value]="user.Email">{{user.Email}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <!--
+              <div class="row m-t-10">
+                <div class="col-8">
+                  <label>User Rights</label>
+                </div>
+                <div class="col-3">
+                  <button type="button" class="btn btn-info btn-block ai-btn btn-rounded" data-toggle="modal" data-target="#userright" (click)="InitUserRight()">Add UserRight</button>
+                </div>
+              </div>
+              <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="user.UserRights.length == 0">No user rights added yet</div>
+              <div class="m-t-40" *ngIf="user.UserRights.length > 0">
+                <table class='display nowrap table table-hover table-striped table-bordered'>
+                  <thead>
+                    <tr>
+                      <th>User Right</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let userRight of user.UserRights">
+                      <td>{{ userRight.ObjectName }}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" id="{{ userRight.Key }}" data-target="#userright" (click)="ModifyUserRight($event)"><i class="ti-write" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="modal" id="{{ userRight.Key }}" data-target="#delete" (click)="ModifyUserRight($event)"><i class="ti-close" aria-hidden="true"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--UserRight-->
+<!--<div *ngIf="userRight" id="userright" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #pData="ngForm" (ngSubmit)="OnSubmitUserRight(pData.value)">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add UserRight</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_userright>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="col-md-12 m-b-20">
+              <label>Object Type</label>
+              <select [(ngModel)]="userRight.ObjectType" name="objectType" class="custom-select col-12" (changed)="ObjectTypeChanged($event.target.value)" id="inlineFormCustomSelect" ngModel>
+                <option value="undefined" selected >Choose...</option>
+                <option *ngFor="let key of okeys" [value]="key">{{objectTypes[key]}}</option>
+              </select>
+              <div *ngIf="(userRight.ObjectType && !(userRight.ObjectType == 8 || userRight.ObjectType == 9 || 
+                    userRight.ObjectType == 6 ||userRight.ObjectType == 10 || userRight.ObjectType == 0))">
+                <label>Primary Target</label>
+                <select [(ngModel)]="userRight.PrimaryKey" *ngIf="userRight.ObjectType == 1" name="PrimaryKey" class="custom-select col-12" id="inlineFormCustomSelect" ngModel>
+                  <option selected value="undefined">Choose...</option>
+                  <option *ngFor="let questionaire of configuration.Questionaires" [value]="questionaire.Key">{{questionaire.Name}}</option>
+                </select>
+                <select [(ngModel)]="userRight.PrimaryKey" *ngIf="userRight.ObjectType == 5" name="PrimaryKey" class="custom-select col-12" id="inlineFormCustomSelect" ngModel>
+                  <option selected value="undefined">Choose...</option>
+                  <option *ngFor="let certification of configuration.Certifications" [value]="certification.Key">{{certification.Name}}</option>
+                </select>
+                <select [(ngModel)]="userRight.PrimaryKey" *ngIf="userRight.ObjectType == 7" name="PrimaryKey" class="custom-select col-12" id="inlineFormCustomSelect" ngModel>
+                  <option selected value="undefined">Choose...</option>
+                  <option *ngFor="let inspection of configuration.Inspections" [value]="inspection.Key">{{inspection.FieldName}}</option>
+                </select>
+              </div>
+              <div class="row" *ngIf="userRight.UserPermissions.length > 0">
+                <div class="col-12">
+                  <label class="m-t-10 m-b-10">Permissions</label>
+                  <div class="demo-checkbox">
+                    <input type="checkbox" id="basic_checkbox_1" value="Add" name="Add" class="filled-in" [checked]="userRight.Permissions[0] !== undefined" (change)="PermissionChanged($event)" ngModel>
+                    <label for="basic_checkbox_1">Add</label>
+                  </div>
+                  <div class="demo-checkbox">
+                    <input type="checkbox" id="basic_checkbox_2" value="View" name="View" class="filled-in" [checked]="userRight.Permissions[0] !== undefined" (change)="PermissionChanged($event)" ngModel>
+                    <label for="basic_checkbox_2">View</label>
+                  </div>
+                  <div class="demo-checkbox">
+                    <input type="checkbox" id="basic_checkbox_3" value="Edit" name="Edit" class="filled-in" [checked]="userRight.Permissions[0] !== undefined" (change)="PermissionChanged($event)" ngModel>
+                    <label for="basic_checkbox_3">Edit</label>
+                  </div>
+                  <div class="demo-checkbox">
+                    <input type="checkbox" id="basic_checkbox_4" value="Delete" name="Delete" class="filled-in" [checked]="userRight.Permissions[0] !== undefined" (change)="PermissionChanged($event)" ngModel>
+                    <label for="basic_checkbox_4">Delete</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+          <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+     /.modal-content 
+  </div>
+   /.modal-dialog 
+</div> -->
+
+<!--Please confirm Modal-->
+<div id="delete" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_confirmed>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div class="col-lg-12">
+          <label>Are you sure you want delete this {{ confirmation_action }}?</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" *ngIf="confirmation_action == 'userright'" class="btn btn-info ai-btn waves-effect" (click)="DeleteUserRight()">Delete</button>
+        <button type="submit" *ngIf="confirmation_action == 'user'" class="btn btn-info ai-btn waves-effect" (click)="RemoveUser()">Delete</button>
+        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#i_pleasewait" #i_pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="i_pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

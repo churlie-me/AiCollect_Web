@@ -1,0 +1,32 @@
+<body>
+  <!-- ============================================================== -->
+  <!-- Main wrapper - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <div id="main-wrapper">
+    <app-nav></app-nav>
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper" *ngIf="authentication.User != null">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
+        <div class="row page-titles" *ngIf="!(this.location.path().includes('architect') || this.location.path().includes('demo'))">
+          <div class="col-md-5 col-8 align-self-center">
+              <h3 class="text-themecolor m-b-0 m-t-0">Dashboard</h3>
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                  <li class="breadcrumb-item active">App</li>
+              </ol>
+          </div>
+        </div>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div *ngIf="authentication.User == null">
+      <router-outlet></router-outlet>
+      <site-footer></site-footer>
+    </div>
+  </div>
+</body>

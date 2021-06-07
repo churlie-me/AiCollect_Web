@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-lg-12">
+      <p *ngIf="!reports"><em>Loading...</em></p>
+      <div *ngIf="reports">
+        <div class="row">
+          <div class="col-9">
+            <h5 class="mt-10 mb-10">Trainings Review</h5>
+          </div>
+        </div>
+        <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="reports.length == 0">You have no Purchases made yet</div>
+        <div class="m-t-20" *ngIf="reports.length > 0" style="overflow: auto;">
+          <a class="btn btn-outline-secondary m-r-10" style="min-width: 100px;" title="Download Excel" (click)='ExportExcel()'>
+            <i class="glyphicon glyphicon-new-window"></i> Excel
+          </a>
+          <a class="btn btn-outline-secondary" style="min-width: 100px;" title="Download CSV" (click)='ExportCsv()'>
+            <i class="glyphicon glyphicon-new-window"></i> Csv
+          </a>
+          <div *ngFor="let report of reports">
+              <h3>{{report.Training.Name}}</h3>
+              <div class="row">
+                  <div class="col-md-4" style="padding-right: 0;">
+                    <table class="display nowrap table table-hover table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Trainers</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let trainer of report.Training.Trainers">
+                          <td>{{ trainer.Name }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-4" style="padding-right: 0; padding-left: 0;">
+                    <table class="display nowrap table table-hover table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Topics</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let topic of report.Training.Topics">
+                          <td>{{ topic.Name }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-4" style="padding-left: 0px">
+                    <table class="display nowrap table table-hover table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Venue</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ report.Training.Location }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="display nowrap table table-hover table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Trainees</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let trainee of report.Training.Trainees">
+                        <td>{{ trainee.Questionaire.Name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

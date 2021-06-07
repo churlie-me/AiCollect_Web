@@ -1,0 +1,270 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!purchases"><em>Loading...</em></p>
+        <div *ngIf="purchases">
+          <div class="row">
+            <div class="col-12">
+              <h5 class="card-title">Purchases</h5>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="purchases.length == 0">Your configuration has no purchases made yet</div>
+          <div *ngIf="purchases.length > 0">
+            <table class='table table-striped'>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let purchase of purchases">
+                  <td><a [routerLink]='["/architect"]' [queryParams]="{Id: certifications.OID , action:'certification'}">{{ purchase.Name }}</a></td>
+                  <td>{{ purchase.Latitude }}</td>
+                  <td>{{ purchase.Longitude }}</td>
+                  <td>{{ purchase.Status }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="configuration">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!regions"><em>Loading...</em></p>
+        <div *ngIf="regions">
+          <div class="row">
+            <div class="col-lg-6">
+              <h5 class="card-title">Regions</h5>
+              <div id="add-region" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #data="ngForm" (ngSubmit)="OnRegionSubmitted(data.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Regions</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_region>×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input type="text" name="Description" class="form-control" placeholder="Region" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: right;">
+              <button type="button" class="btn btn-info ai-btn btn-rounded" data-toggle="modal" data-target="#add-region">Add Regions</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="regions.EnumValues.length == 0">No regions added yet</div>
+          <div class="m-t-40" *ngIf="regions.EnumValues.length > 0">
+            <table class="display nowrap table table-hover table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Code</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let region of regions.EnumValues">
+                  <td>{{ region.Description }}</td>
+                  <td>{{ region.Code }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!products"><em>Loading...</em></p>
+        <div *ngIf="products">
+          <div class="row">
+            <div class="col-lg-6">
+              <h5 class="card-title">Products</h5>
+              <div id="add-product" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #data="ngForm" (ngSubmit)="OnProductSubmitted(data.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Product</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_product>×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input type="text" name="Description" class="form-control" placeholder="Description" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: right;">
+              <button type="button" class="btn btn-info ai-btn btn-rounded" data-toggle="modal" data-target="#add-product">Add Product</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="products.EnumValues.length == 0">No products added yet</div>
+          <div class="m-t-40" *ngIf="products.EnumValues.length > 0">
+            <table class="display nowrap table table-hover table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Code</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products.EnumValues">
+                  <td>{{ product.Description }}</td>
+                  <td>{{ product.Code }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <p *ngIf="!prices"><em>Loading...</em></p>
+        <div *ngIf="prices">
+          <div class="row">
+            <div class="col-lg-6">
+              <h5 class="card-title">Prices</h5>
+              <div id="add-price" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form #data="ngForm" (ngSubmit)="OnPriceSubmitted(data.value)">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add Price</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" #x_price>×</button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20" *ngIf="products">
+                            <select name="Code" class="custom-select col-12" id="inlineFormCustomSelect" ngModel>
+                              <option [selected]="true">Choose...</option>
+                              <option *ngFor="let product of products.EnumValues" [value]="product.Code">{{product.Description}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-md-12 m-b-20">
+                            <input type="number" name="Description" class="form-control" placeholder="Price" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info ai-btn waves-effect">Save</button>
+                        <button type="button" class="btn btn-outline-info ai-btn waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+            </div>
+            <div class="col-lg-6" style="text-align: right;">
+              <button type="button" class="btn btn-info ai-btn btn-rounded" data-toggle="modal" data-target="#add-price">Add Price</button>
+            </div>
+          </div>
+          <div style="padding: 20px; text-align: center; margin-top: 20px;" *ngIf="prices.EnumValues.length == 0">No prices added yet</div>
+          <div class="m-t-40" *ngIf="prices.EnumValues.length > 0">
+            <table class="display nowrap table table-hover table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Code</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let price of prices.EnumValues">
+                  <td>{{ price.Description }}</td>
+                  <td>{{ price.Code }}</td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-write" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Please wait Modal-->
+<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="display: none;" data-toggle="modal" data-target="#i_pleasewait" #i_pleasewait><i class="ti-close" aria-hidden="true"></i></button>
+<div id="i_pleasewait" class="modal fade in" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header" style="border: 0;padding: 0;">
+        <button type="button" style="visibility: hidden;" class="close" data-dismiss="modal" aria-hidden="true" #x_pleasewait>×</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div>
+          <svg class="circular" viewBox="25 25 50 50" style="height: 30px;position: inherit !important;">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+          <label>Please wait...</label>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
